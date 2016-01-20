@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Bill.Core.Interfaces;
+using log4net;
 
 namespace Bill.API.Controllers
 {
@@ -9,9 +10,11 @@ namespace Bill.API.Controllers
         public class BillController : ApiController
         {
             private readonly IBillService _billService;
-            public BillController(IBillService billService)
+            private readonly ILog _log;
+            public BillController(IBillService billService, ILog log)
             {
-                _billService = billService;                
+                _billService = billService;
+                _log = log;
             }
 
             [HttpGet]         
@@ -26,8 +29,9 @@ namespace Bill.API.Controllers
                     }
                     return Ok(bill);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    _log.Error("BillController - error in Get method", ex);
                     return BadRequest();
                 }                
             }

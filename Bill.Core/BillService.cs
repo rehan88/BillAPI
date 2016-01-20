@@ -1,11 +1,12 @@
-﻿using System.Net;
+﻿using System.Configuration;
+using System.Net;
 using Bill.Core.Interfaces;
 
 namespace Bill.Core
 {
     public class BillService : IBillService
     {
-        private const string ApiBaseUrl = "http://safe-plains-5453.herokuapp.com/bill.json";
+        private static readonly string ApiBaseUrl = ConfigurationManager.AppSettings["MySetting"];
 
         public string GetBill()
         {

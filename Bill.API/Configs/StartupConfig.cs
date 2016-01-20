@@ -5,6 +5,7 @@ using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using Owin;
 
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 namespace Bill.API.Configs
 {
     namespace Configs
@@ -17,7 +18,9 @@ namespace Bill.API.Configs
 
                 config.MapHttpAttributeRoutes();
                 config.MapDefinedRoutes();
-                config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
+                config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+
+                log4net.Config.XmlConfigurator.Configure();
 
                 appBuilder.UseNinjectMiddleware(() => kernel);
                 appBuilder.UseNinjectWebApi(config);
